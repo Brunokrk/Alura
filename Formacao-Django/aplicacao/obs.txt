@@ -1,0 +1,36 @@
+//powershell como admin caso venv não funcione
+Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser 
+
+//venv no windows, na pasta aplicacao
+.\/venv/Scripts/activate
+
+//subindo servidor
+python manage.py runserver
+
+//criar um app
+python manage.py startapp [nome]
+
+//Para utilizar arquivos estáticos, editar settings.py
+STATIC_ROOT: indica o caminho absoluto onde o collectstatic coletará os arquivos 
+STATICFILES_DIR : define os locais adicionais que o app staticfiles percorrerá se o localizador FileSysyemFinder estiver ativado
+STATIC_URL : referência a arquivos estáticos localizados no STATIC_ROOT 
+
+//Sobre Links, urls e views
+Para acessar um link no html por meio de código python {%...%} é necessário definir a url em "urls.py" com o nome para o link, e definir a função com o request em "views.py"
+
+//Código python:
+{{}} -> para exibir um resultado 
+{% %} -> para processar um código
+
+//Adaptador de PostgreSQL para Python
+    pip install psycopg2
+    pip install psycopg2-binary
+
+//Os modelos de tabela para o banco de dados são criados no arquivo "models.py"
+    Logo após, rodar python manage.py migrations. Que criará uma lista de "coisas" que queremos mapear para o banco
+
+//Para fazer o mapeamento (migração) de fato:
+    python manage.py migrate
+
+//Observação sobre criação de apps
+    Sempre editar "INSTALLED_APPS" no arquivo "settings.py"
