@@ -2,8 +2,7 @@ from django.shortcuts import get_object_or_404, render
 from .models import Receita
 
 def index(request):
-
-    receitas = Receita.objects.all()
+    receitas = Receita.objects.filter(publicada=True)
 
     dados = {
         'receitas' : receitas
