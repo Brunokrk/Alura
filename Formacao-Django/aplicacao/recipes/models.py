@@ -13,4 +13,5 @@ class Receita(models.Model):
     categoria = models.CharField(max_length=100)
     #se não for possível pegar, fica em branco
     date_receita = models.DateField(default=datetime.now, blank=True)
+    foto_receita = models.ImageField(upload_to='fotos/%d/%m/%Y/', blank= True)
     publicada = models.BooleanField(default=False)
