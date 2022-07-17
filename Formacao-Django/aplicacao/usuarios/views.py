@@ -29,7 +29,8 @@ def login(request):
     if request.method == 'POST':
         email = request.POST['email']
         senha = request.POST['senha']
-        print(email, senha)
+        if email=="" or senha =="":
+            return redirect("login")
         return redirect('dashboard')
     return render(request, 'usuarios/login.html')
 
