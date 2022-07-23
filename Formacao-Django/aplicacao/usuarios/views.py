@@ -2,7 +2,7 @@ from django.db import reset_queries
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login
-from django.contrib import auth
+from django.contrib import auth, messages
 from recipes.models import Receita
 # Create your views here.
 def cadastro(request):
@@ -12,18 +12,22 @@ def cadastro(request):
         senha = request.POST['password']
         senha2 = request.POST['password2']
 
-        if not nome.strip():
+        if campo_vazio(nome):
             return redirect('cadastro')
-        if not email.strip():
+        if campo_vazio(email):
             return redirect('cadastro')
         if senha != senha2:
+            messages.error(request, 'As senhas não coincidem!!')
             return redirect('cadastro')
         if User.objects.filter(email = email).exists():
             #já cadastrado
             return redirect('cadastro')
+        if User.objects.filter(username = nome).exists():
+            return redirect('cadastro')
 
         user = User.objects.create_user(username=nome, email=email, password = senha)
         user.save()
+        messages.success(request, 'Cadastro realizado com sucesso!!')
         return redirect('login')
     else:
         return render(request, 'usuarios/cadastro.html')
@@ -76,3 +80,15 @@ def cria_receita(request):
     else:
         return render (request, 'usuarios/cria_receita.html')
         
+def deleta_receita (request, receita_id):
+    receita = get_object_or_404(Receita, pk=receita_id)
+    receita.delete()
+    return redirect('dashboard')
+    
+
+
+def campo_vazio(campo):
+    return not campo.strip()
+
+
+
